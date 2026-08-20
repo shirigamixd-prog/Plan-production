@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<!-- saved from url=(0048)https://mellifluous-starship-0f14ba.netlify.app/ -->
+<html lang="th"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Material Requirement Calculator - Allwin</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 30px; background-color: #f4f7f6; }
+        .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); max-width: 1150px; margin: auto; }
+        h2 { color: #1e3a8a; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+        .btn-group { display: flex; gap: 10px; margin-bottom: 15px; }
+        .btn-model { flex: 1; padding: 12px; font-size: 16px; font-weight: bold; border: 2px solid #2563eb; background: white; color: #2563eb; border-radius: 6px; cursor: pointer; transition: 0.2s; }
+        .btn-model.active { background: #2563eb; color: white; }
+        label { display: block; margin-top: 15px; font-weight: bold; color: #334155; }
+        input { width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box; border: 1px solid #cbd5e1; border-radius: 5px; font-size: 16px; }
+        button.btn-calc { margin-top: 20px; padding: 12px; background-color: #0f172a; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; font-size: 16px; font-weight: bold; }
+        button.btn-calc:hover { background-color: #1e293b; }
+        h3.section-title { margin-top: 28px; margin-bottom: 6px; color: #0f172a; border-left: 5px solid #2563eb; padding-left: 8px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #e2e8f0; padding: 10px; text-align: left; font-size: 14px; }
+        th { background-color: #1e293b; color: white; }
+        tr:nth-child(even) { background-color: #f8fafc; }
+        .total-row { font-weight: bold; background-color: #e0f2fe !important; }
+        .grand-total-row { font-weight: bold; background-color: #fef08a !important; }
+        .tag-bend { color: #c2410c; font-weight: bold; }
+        .tag-straight { color: #047857; font-weight: bold; }
+        .tag-steel { color: #6d28d9; font-weight: bold; }
+        .tag-shaft { color: #b91c1c; font-weight: bold; }
+        .tag-screw { color: #64748b; font-weight: bold; }
+        .summary-box { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+        .summary-item { flex: 1; min-width: 150px; background: #f1f5f9; border-radius: 8px; padding: 12px; text-align: center; }
+        .summary-item .label { font-size: 12px; color: #64748b; }
+        .summary-item .value { font-size: 20px; font-weight: bold; color: #0f172a; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>คำนวณวัตถุดิบ (ท่อ / แผ่นเหล็ก / เพลากลม / สกรู) - Allwin BOM Rev.1</h2>
+
+    <!-- ปุ่มสลับ Model -->
+    <div class="btn-group">
+        <button id="btn-2511" class="btn-model active" onclick="switchModel(&#39;JT2511LW&#39;)">Model JT2511LW</button>
+        <button id="btn-2512" class="btn-model" onclick="switchModel(&#39;JT2512LW&#39;)">Model JT2512LW</button>
+    </div>
+
+    <label for="demand">ยอดความต้องการประกอบ (Demand - ชิ้น):</label>
+    <input type="number" id="demand" value="1" placeholder="กรอกยอดความต้องการประกอบ">
+
+    <button class="btn-calc" onclick="calculateParts()">คำนวณจำนวน Part ที่ต้องใช้</button>
+
+    <div id="result"><h3>ผลการคำนวณสำหรับ JT2511LW (ยอดผลิต 1 ชุด)</h3><h3 class="section-title">1) ท่อ (STKM)</h3><table>
+                <tbody><tr>
+                    <th>ประเภท</th><th>Part Number</th><th>ชื่อชิ้นส่วน</th>
+                    <th>ขนาด Spec</th><th>Qty/Set</th>
+                    <th>จำนวนชิ้น</th>
+                    <th>จำนวนท่อ (เส้น)</th>
+                </tr><tr>
+                    <td class="tag-straight">ท่อตรง</td>
+                    <td><b>12105CEE</b></td><td>SUPPORTING TUBE</td><td>Ø25.4x1.2x515.60</td>
+                    <td>1</td>
+                    <td><b>1</b> ชิ้น</td>
+                    <td><b>0.09</b> เส้น (6M)</td>
+                 </tr><tr>
+                    <td class="tag-straight">ท่อตรง</td>
+                    <td><b>12105CEF</b></td><td>SUPPORTING TUBE</td><td>Ø25.4x1.2x441.00</td>
+                    <td>1</td>
+                    <td><b>1</b> ชิ้น</td>
+                    <td><b>0.07</b> เส้น (6M)</td>
+                 </tr><tr>
+                    <td class="tag-straight">ท่อตรง</td>
+                    <td><b>12105CBL</b></td><td>SUPPORTING TUBE</td><td>Ø25.4x1.2x362.50</td>
+                    <td>2</td>
+                    <td><b>2</b> ชิ้น</td>
+                    <td><b>0.12</b> เส้น (6M)</td>
+                 </tr><tr>
+                    <td class="tag-straight">ท่อตรง</td>
+                    <td><b>12105CBX</b></td><td>SUPPORTING TUBE</td><td>Ø25.4x1.2x362.50</td>
+                    <td>2</td>
+                    <td><b>2</b> ชิ้น</td>
+                    <td><b>0.12</b> เส้น (6M)</td>
+                 </tr><tr>
+                    <td class="tag-bend">ท่อดัด</td>
+                    <td><b>12105CEC</b></td><td>SUPPORTING TUBE</td><td>Ø25.4x1.2x947.91</td>
+                    <td>1</td>
+                    <td><b>1</b> ชิ้น</td>
+                    <td><b>0.16</b> เส้น (6M)</td>
+                 </tr><tr>
+                    <td class="tag-bend">ท่อดัด</td>
+                    <td><b>12105CED</b></td><td>SUPPORTING TUBE</td><td>Ø25.4x1.2x947.91</td>
+                    <td>1</td>
+                    <td><b>1</b> ชิ้น</td>
+                    <td><b>0.16</b> เส้น (6M)</td>
+                 </tr><tr>
+                    <td class="tag-bend">ท่อดัด,รีด</td>
+                    <td><b>12105CBZ</b></td><td>SUPPORTING TUBE</td><td>Ø25.4x1.2x592.92 (R57.3)</td>
+                    <td>2</td>
+                    <td><b>2</b> ชิ้น</td>
+                    <td><b>0.20</b> เส้น (6M)</td>
+                 </tr><tr>
+                    <td class="tag-bend">ท่อดัด,รีด</td>
+                    <td><b>12105CBQ</b></td><td>SUPPORTING TUBE</td><td>Ø25.4x1.2x592.92 (R57.3)</td>
+                    <td>2</td>
+                    <td><b>2</b> ชิ้น</td>
+                    <td><b>0.20</b> เส้น (6M)</td>
+                 </tr><tr class="total-row"><td colspan="5">รวมท่อดัดทั้งหมด</td><td>6 ชิ้น</td><td>-</td></tr><tr class="total-row"><td colspan="5">รวมท่อตรงทั้งหมด</td><td>6 ชิ้น</td><td>-</td></tr><tr class="grand-total-row"><td colspan="5">รวมท่อทุกประเภททั้งหมด</td><td>12 ชิ้น</td><td><b>1.11</b> เส้น</td></tr></tbody></table><h3 class="section-title">2) แผ่นเหล็ก (SPHC/SPCC)</h3><table>
+                <tbody><tr>
+                    <th>Assembly</th><th>Part Number</th><th>ชื่อชิ้นส่วน</th>
+                    <th>ขนาด Spec (หนา x กว้าง x ยาว)</th><th>Qty/Set</th><th>จำนวนที่ต้องใช้ทั้งหมด</th>
+                </tr><tr>
+                    <td>框架 12105CEA</td><td><b>12105CEB</b></td><td class="tag-steel">SET PLATE</td>
+                    <td>SPCC-SD t1.2 x 534 x 1219</td><td>1</td><td><b>1</b> ชิ้น</td>
+                 </tr><tr>
+                    <td>框架 12105CEA</td><td><b>12105CEG</b></td><td class="tag-steel">ANCHOR PLATE</td>
+                    <td>SPHC t3 x 53 x 1219</td><td>4</td><td><b>4</b> ชิ้น</td>
+                 </tr><tr>
+                    <td>框架 12105CEA</td><td><b>12105CEH</b></td><td class="tag-steel">SET PLATE</td>
+                    <td>SPHC t2 x 600 x 450</td><td>1</td><td><b>1</b> ชิ้น</td>
+                 </tr><tr>
+                    <td>框架 12105CEA</td><td><b>12105CEJ</b></td><td class="tag-steel">ANCHOR PLATE</td>
+                    <td>SPHC t2 x 70 x 1219</td><td>1</td><td><b>1</b> ชิ้น</td>
+                 </tr><tr>
+                    <td>腳架 12105CUB</td><td><b>12105CBK</b></td><td class="tag-steel">RETAINING CLIP</td>
+                    <td>SPHC t2 x 487 x 1219</td><td>1</td><td><b>1</b> ชิ้น</td>
+                 </tr><tr>
+                    <td>腳架 12105CUB</td><td><b>12105CBU</b></td><td class="tag-steel">SET PLATE</td>
+                    <td>SPHC t2 x 68 x 1219</td><td>2</td><td><b>2</b> ชิ้น</td>
+                 </tr><tr>
+                    <td>腳架 12105CUB</td><td><b>12105CBW</b></td><td class="tag-steel">RETAINING CLIP</td>
+                    <td>SPHC t2 x 427 x 1219</td><td>1</td><td><b>1</b> ชิ้น</td>
+                 </tr><tr>
+                    <td>腳架 12105CUB</td><td><b>12105CC0</b></td><td class="tag-steel">LINK PLATE</td>
+                    <td>SPHC t2 x 502 x 1219</td><td>1</td><td><b>1</b> ชิ้น</td>
+                 </tr><tr>
+                    <td>腳架 12105CUB</td><td><b>12105CC3</b></td><td class="tag-steel">SET PLATE (R)</td>
+                    <td>SPHC t4 x 152.5 x 1219</td><td>1</td><td><b>1</b> ชิ้น</td>
+                 </tr><tr>
+                    <td>腳架 12105CUB</td><td><b>12105CC4</b></td><td class="tag-steel">SET PLATE (L)</td>
+                    <td>SPHC t4 x 152.5 x 1219</td><td>1</td><td><b>1</b> ชิ้น</td>
+                 </tr><tr class="grand-total-row"><td colspan="5">รวมแผ่นเหล็กทั้งหมด</td><td>14 ชิ้น</td></tr></tbody></table><h3 class="section-title">3) เพลากลม (SS400)</h3><table>
+                <tbody><tr>
+                    <th>Assembly</th><th>Part Number</th><th>ชื่อชิ้นส่วน</th>
+                    <th>ขนาด Spec (OD x ยาว)</th><th>Qty/Set</th>
+                    <th>จำนวนชิ้น</th>
+                    <th>จำนวนเพลา (เส้น)</th>
+                </tr><tr>
+                    <td>腳架 12105CUB</td><td><b>12105CBM</b></td><td class="tag-shaft">SHAFT</td>
+                    <td>SS400 OD12 x L95</td><td>2</td>
+                    <td><b>2</b> ชิ้น</td>
+                    <td><b>0.03</b> เส้น (6M)</td>
+                 </tr><tr class="grand-total-row"><td colspan="5">รวมเพลากลมทั้งหมด</td><td>2 ชิ้น</td><td><b>0.03</b> เส้น</td></tr></tbody></table><h3 class="section-title">4) สกรู</h3><table>
+                <tbody><tr>
+                    <th>Assembly</th><th>Part Number</th><th>ชื่อชิ้นส่วน</th>
+                    <th>Spec</th><th>Qty/Set</th><th>จำนวนที่ต้องใช้ทั้งหมด</th>
+                </tr><tr>
+                    <td>腳架 12105CUB</td><td><b>12105CBJ</b></td><td class="tag-screw">Welding screws</td>
+                    <td>M6x12 (หัว 14mm หนา 2mm)</td><td>4</td><td><b>4</b> ตัว</td>
+                 </tr><tr class="grand-total-row"><td colspan="5">รวมสกรูทั้งหมด</td><td>4 ตัว</td></tr></tbody></table><h3 class="section-title">5) สรุปยอดสั่งซื้อท่อและเพลาตาม Spec วัตถุดิบมาตรฐาน</h3><table>
+                <tbody><tr>
+                    <th>รายการวัตถุดิบมาตรฐาน</th>
+                    <th>ความยาวสุทธิรวมทั้งหมด (ม.)</th>
+                    <th>จำนวนที่ต้องสั่งซื้อ (เส้น - คำนวณตามจริง)</th>
+                    <th>จำนวนที่ต้องสั่งซื้อ (เส้น - ปัดขึ้น)</th>
+                </tr><tr>
+                    <td><b>ท่อ 25.4 (ยาว 6M)</b></td>
+                    <td>6.67 ม.</td>
+                    <td><b>1.11</b> เส้น</td>
+                    <td><b style="color:#2563eb;">2</b> เส้น</td>
+                 </tr><tr>
+                    <td><b>เพลา OD12 (ยาว 6M)</b></td>
+                    <td>0.19 ม.</td>
+                    <td><b>0.03</b> เส้น</td>
+                    <td><b style="color:#2563eb;">1</b> เส้น</td>
+                 </tr></tbody></table><div class="summary-box">
+                <div class="summary-item"><div class="label">ท่อรวม (ชิ้น)</div><div class="value">12</div></div>
+                <div class="summary-item"><div class="label">ท่อรวม (เส้น)</div><div class="value">2</div></div>
+                <div class="summary-item"><div class="label">แผ่นเหล็ก (ชิ้น)</div><div class="value">14</div></div>
+                <div class="summary-item"><div class="label">เพลากลม (เส้น)</div><div class="value">1</div></div>
+                <div class="summary-item"><div class="label">สกรู (ตัว)</div><div class="value">4</div></div>
+             </div></div>
+</div>
+
+<script>
+let currentModel = 'JT2511LW';
+
+// BOM Data กำหนดความยาวตัดต่อชิ้น (len - mm) และความยาววัตถุดิบมาตรฐาน (stockLen - mm)
+const bomData = {
+    'JT2511LW': {
+        defaultDemand: 1,
+        pipe: [
+            { type: "ท่อตรง", pn: "12105CEE", name: "SUPPORTING TUBE", spec: "Ø25.4x1.2x515.60", usage: 1, len: 515.60, stockLen: 6000 },
+            { type: "ท่อตรง", pn: "12105CEF", name: "SUPPORTING TUBE", spec: "Ø25.4x1.2x441.00", usage: 1, len: 441.00, stockLen: 6000 },
+            { type: "ท่อตรง", pn: "12105CBL", name: "SUPPORTING TUBE", spec: "Ø25.4x1.2x362.50", usage: 2, len: 362.50, stockLen: 6000 },
+            { type: "ท่อตรง", pn: "12105CBX", name: "SUPPORTING TUBE", spec: "Ø25.4x1.2x362.50", usage: 2, len: 362.50, stockLen: 6000 },
+            { type: "ท่อดัด", pn: "12105CEC", name: "SUPPORTING TUBE", spec: "Ø25.4x1.2x947.91", usage: 1, len: 947.91, stockLen: 6000 },
+            { type: "ท่อดัด", pn: "12105CED", name: "SUPPORTING TUBE", spec: "Ø25.4x1.2x947.91", usage: 1, len: 947.91, stockLen: 6000 },
+            { type: "ท่อดัด,รีด", pn: "12105CBZ", name: "SUPPORTING TUBE", spec: "Ø25.4x1.2x592.92 (R57.3)", usage: 2, len: 592.92, stockLen: 6000 },
+            { type: "ท่อดัด,รีด", pn: "12105CBQ", name: "SUPPORTING TUBE", spec: "Ø25.4x1.2x592.92 (R57.3)", usage: 2, len: 592.92, stockLen: 6000 }
+        ],
+        steel: [
+            { assy: "框架 12105CEA", pn: "12105CEB", name: "SET PLATE", spec: "SPCC-SD t1.2 x 534 x 1219", usage: 1 },
+            { assy: "框架 12105CEA", pn: "12105CEG", name: "ANCHOR PLATE", spec: "SPHC t3 x 53 x 1219", usage: 4 },
+            { assy: "框架 12105CEA", pn: "12105CEH", name: "SET PLATE", spec: "SPHC t2 x 600 x 450", usage: 1 },
+            { assy: "框架 12105CEA", pn: "12105CEJ", name: "ANCHOR PLATE", spec: "SPHC t2 x 70 x 1219", usage: 1 },
+            { assy: "腳架 12105CUB", pn: "12105CBK", name: "RETAINING CLIP", spec: "SPHC t2 x 487 x 1219", usage: 1 },
+            { assy: "腳架 12105CUB", pn: "12105CBU", name: "SET PLATE", spec: "SPHC t2 x 68 x 1219", usage: 2 },
+            { assy: "腳架 12105CUB", pn: "12105CBW", name: "RETAINING CLIP", spec: "SPHC t2 x 427 x 1219", usage: 1 },
+            { assy: "腳架 12105CUB", pn: "12105CC0", name: "LINK PLATE", spec: "SPHC t2 x 502 x 1219", usage: 1 },
+            { assy: "腳架 12105CUB", pn: "12105CC3", name: "SET PLATE (R)", spec: "SPHC t4 x 152.5 x 1219", usage: 1 },
+            { assy: "腳架 12105CUB", pn: "12105CC4", name: "SET PLATE (L)", spec: "SPHC t4 x 152.5 x 1219", usage: 1 }
+        ],
+        shaft: [
+            { assy: "腳架 12105CUB", pn: "12105CBM", name: "SHAFT", spec: "SS400 OD12 x L95", usage: 2, len: 95.00, stockLen: 6000 }
+        ],
+        screw: [
+            { assy: "腳架 12105CUB", pn: "12105CBJ", name: "Welding screws", spec: "M6x12 (หัว 14mm หนา 2mm)", usage: 4 }
+        ]
+    },
+    'JT2512LW': {
+        defaultDemand: 1,
+        pipe: [
+            { type: "ท่อตรง", pn: "12125C5W", name: "SUPPORTING TUBE", spec: "Ø31.8x1.2x272.40", usage: 4, len: 272.40, stockLen: 6000 },
+            { type: "ท่อตรง", pn: "12125C5X", name: "SUPPORTING TUBE", spec: "Ø31.8x1.2x650.00", usage: 2, len: 650.00, stockLen: 6000 },
+            { type: "ท่อตรง", pn: "12125C5Y", name: "CONNECTOR", spec: "Ø25.4x1.2x426.23", usage: 1, len: 426.23, stockLen: 6000 },
+            { type: "ท่อตรง", pn: "12125C9R", name: "UPPER TUBE", spec: "Ø20.0x1.2x524.52", usage: 1, len: 524.52, stockLen: 4000 },
+            { type: "ท่อตรง", pn: "12125C9Y", name: "UPPER STIFFENER", spec: "Ø31.8x1.2x440.00", usage: 2, len: 440.00, stockLen: 6000 },
+            { type: "ท่อตรง", pn: "12125CA3", name: "SUPPORTING TUBE", spec: "Ø20.0x1.2x426.96", usage: 1, len: 426.96, stockLen: 4000 },
+            { type: "ท่อตรง", pn: "1200506T", name: "SLEEVE (ท่อสวม)", spec: "SS41 Ø12.7x1.2x35.00", usage: 2, len: 35.00, stockLen: 6000 },
+            { type: "ท่อดัด", pn: "12125CA0", name: "SUPPORTING TUBE", spec: "Ø31.8x1.5x646.00", usage: 1, len: 646.00, stockLen: 6000 },
+            { type: "ท่อดัด", pn: "12125CA2", name: "SUPPORTING TUBE", spec: "Ø31.8x1.5x646.00", usage: 1, len: 646.00, stockLen: 6000 },
+            { type: "ท่อดัด,รีด", pn: "12125CA5", name: "ELBOW", spec: "Ø31.8x1.2x950.00", usage: 1, len: 950.00, stockLen: 6000 },
+            { type: "ท่อดัด", pn: "12125C9G", name: "ELBOW", spec: "Ø31.8x1.2x1931.00 (R54.1)", usage: 1, len: 1931.00, stockLen: 6000 },
+            { type: "ท่อดัด", pn: "12125C9Q", name: "UPPER SUPPORT TUBE", spec: "Ø31.8x1.2x1931.00 (R54.1)", usage: 1, len: 1931.00, stockLen: 6000 },
+            { type: "ท่อดัด", pn: "12125C9T", name: "UPPER SUPPORT TUBE", spec: "Ø31.8x1.2x985.00", usage: 1, len: 985.00, stockLen: 6000 },
+            { type: "ท่อดัด,รีด", pn: "12125C9H", name: "HANDLE", spec: "Ø31.8x1.2x374.00 (R54.1)", usage: 2, len: 374.00, stockLen: 6000 }
+        ],
+        steel: [
+            { assy: "框架 12125C62", pn: "12125C5Z", name: "RETAINING CLIP", spec: "SPHC t2 x 459 x 1219", usage: 1 },
+            { assy: "框架 12125C62", pn: "12125C60", name: "SET PLATE", spec: "SPHC t3 x 66.3 x 1219", usage: 4 },
+            { assy: "框架 12125C62", pn: "12125C61", name: "SET PLATE", spec: "SPHC t2 x 52.5 x 1219", usage: 2 },
+            { assy: "腳架 12125CUV", pn: "12125CA6", name: "PEDAL_A", spec: "SPHC t2.3 x 228 x 1219", usage: 1 },
+            { assy: "腳架 12125CUV", pn: "12125DDJ", name: "PEDAL_B", spec: "SPHC t2.3 x 102.5 x 1219", usage: 1 }
+        ],
+        shaft: [
+            { assy: "腳架 12125CUV", pn: "12125C9S", name: "SHAFT", spec: "SS400 OD12 x L65", usage: 1, len: 65.00, stockLen: 6000 },
+            { assy: "腳架 12125CUV", pn: "12125C9Z", name: "SHAFT", spec: "SS400 OD12 x L468", usage: 1, len: 468.00, stockLen: 6000 },
+            { assy: "腳架 12125CUV", pn: "1200506P", name: "SHAFT", spec: "SS400 OD5 x L52", usage: 1, len: 52.00, stockLen: 4000 }
+        ],
+        screw: []
+    }
+};
+
+function switchModel(model) {
+    currentModel = model;
+    document.getElementById('btn-2511').classList.toggle('active', model === 'JT2511LW');
+    document.getElementById('btn-2512').classList.toggle('active', model === 'JT2512LW');
+    document.getElementById('demand').value = bomData[model].defaultDemand;
+    calculateParts();
+}
+
+function buildPipeTable(demand, items) {
+    let totalBend = 0, totalStraight = 0;
+    let totalBarsAll = 0;
+
+    let html = `<h3 class="section-title">1) ท่อ (STKM)</h3>`;
+    html += `<table>
+                <tr>
+                    <th>ประเภท</th><th>Part Number</th><th>ชื่อชิ้นส่วน</th>
+                    <th>ขนาด Spec</th><th>Qty/Set</th>
+                    <th>จำนวนชิ้น</th>
+                    <th>จำนวนท่อ (เส้น)</th>
+                </tr>`;
+    items.forEach(item => {
+        const totalReq = demand * item.usage;
+        const barsNeeded = (totalReq * item.len) / item.stockLen;
+
+        totalBarsAll += barsNeeded;
+
+        const typeClass = item.type.includes("ดัด") ? "tag-bend" : "tag-straight";
+        if (item.type.includes("ดัด")) totalBend += totalReq; else totalStraight += totalReq;
+
+        html += `<tr>
+                    <td class="${typeClass}">${item.type}</td>
+                    <td><b>${item.pn}</b></td><td>${item.name}</td><td>${item.spec}</td>
+                    <td>${item.usage}</td>
+                    <td><b>${totalReq.toLocaleString()}</b> ชิ้น</td>
+                    <td><b>${barsNeeded.toFixed(2)}</b> เส้น (${(item.stockLen/1000)}M)</td>
+                 </tr>`;
+    });
+    html += `<tr class="total-row"><td colspan="5">รวมท่อดัดทั้งหมด</td><td>${totalBend.toLocaleString()} ชิ้น</td><td>-</td></tr>`;
+    html += `<tr class="total-row"><td colspan="5">รวมท่อตรงทั้งหมด</td><td>${totalStraight.toLocaleString()} ชิ้น</td><td>-</td></tr>`;
+    html += `<tr class="grand-total-row"><td colspan="5">รวมท่อทุกประเภททั้งหมด</td><td>${(totalBend+totalStraight).toLocaleString()} ชิ้น</td><td><b>${totalBarsAll.toFixed(2)}</b> เส้น</td></tr>`;
+    html += `</table>`;
+    return { html, totalBend, totalStraight, totalBarsAll };
+}
+
+function buildSteelTable(demand, items) {
+    let total = 0;
+    let html = `<h3 class="section-title">2) แผ่นเหล็ก (SPHC/SPCC)</h3>`;
+    html += `<table>
+                <tr>
+                    <th>Assembly</th><th>Part Number</th><th>ชื่อชิ้นส่วน</th>
+                    <th>ขนาด Spec (หนา x กว้าง x ยาว)</th><th>Qty/Set</th><th>จำนวนที่ต้องใช้ทั้งหมด</th>
+                </tr>`;
+    items.forEach(item => {
+        const totalReq = demand * item.usage;
+        total += totalReq;
+        html += `<tr>
+                    <td>${item.assy}</td><td><b>${item.pn}</b></td><td class="tag-steel">${item.name}</td>
+                    <td>${item.spec}</td><td>${item.usage}</td><td><b>${totalReq.toLocaleString()}</b> ชิ้น</td>
+                 </tr>`;
+    });
+    html += `<tr class="grand-total-row"><td colspan="5">รวมแผ่นเหล็กทั้งหมด</td><td>${total.toLocaleString()} ชิ้น</td></tr>`;
+    html += `</table>`;
+    return { html, total };
+}
+
+function buildShaftTable(demand, items) {
+    let total = 0, totalBarsAll = 0;
+    let html = `<h3 class="section-title">3) เพลากลม (SS400)</h3>`;
+    if (items.length === 0) {
+        html += `<p style="color:#94a3b8;">- ไม่มีรายการเพลากลมสำหรับรุ่นนี้ -</p>`;
+        return { html, total, totalBarsAll };
+    }
+    html += `<table>
+                <tr>
+                    <th>Assembly</th><th>Part Number</th><th>ชื่อชิ้นส่วน</th>
+                    <th>ขนาด Spec (OD x ยาว)</th><th>Qty/Set</th>
+                    <th>จำนวนชิ้น</th>
+                    <th>จำนวนเพลา (เส้น)</th>
+                </tr>`;
+    items.forEach(item => {
+        const totalReq = demand * item.usage;
+        const barsNeeded = (totalReq * item.len) / item.stockLen;
+
+        total += totalReq;
+        totalBarsAll += barsNeeded;
+
+        html += `<tr>
+                    <td>${item.assy}</td><td><b>${item.pn}</b></td><td class="tag-shaft">${item.name}</td>
+                    <td>${item.spec}</td><td>${item.usage}</td>
+                    <td><b>${totalReq.toLocaleString()}</b> ชิ้น</td>
+                    <td><b>${barsNeeded.toFixed(2)}</b> เส้น (${(item.stockLen/1000)}M)</td>
+                 </tr>`;
+    });
+    html += `<tr class="grand-total-row"><td colspan="5">รวมเพลากลมทั้งหมด</td><td>${total.toLocaleString()} ชิ้น</td><td><b>${totalBarsAll.toFixed(2)}</b> เส้น</td></tr>`;
+    html += `</table>`;
+    return { html, total, totalBarsAll };
+}
+
+function buildScrewTable(demand, items) {
+    let total = 0;
+    let html = `<h3 class="section-title">4) สกรู</h3>`;
+    if (items.length === 0) {
+        html += `<p style="color:#94a3b8;">- ไม่มีรายการสกรูสำหรับรุ่นนี้ -</p>`;
+        return { html, total };
+    }
+    html += `<table>
+                <tr>
+                    <th>Assembly</th><th>Part Number</th><th>ชื่อชิ้นส่วน</th>
+                    <th>Spec</th><th>Qty/Set</th><th>จำนวนที่ต้องใช้ทั้งหมด</th>
+                </tr>`;
+    items.forEach(item => {
+        const totalReq = demand * item.usage;
+        total += totalReq;
+        html += `<tr>
+                    <td>${item.assy}</td><td><b>${item.pn}</b></td><td class="tag-screw">${item.name}</td>
+                    <td>${item.spec}</td><td>${item.usage}</td><td><b>${totalReq.toLocaleString()}</b> ตัว</td>
+                 </tr>`;
+    });
+    html += `<tr class="grand-total-row"><td colspan="5">รวมสกรูทั้งหมด</td><td>${total.toLocaleString()} ตัว</td></tr>`;
+    html += `</table>`;
+    return { html, total };
+}
+
+function buildRawMaterialSummary(demand, pipeItems, shaftItems) {
+    const summary = {};
+
+    pipeItems.forEach(item => {
+        const totalReq = demand * item.usage;
+        const totalLen = totalReq * item.len;
+        const key = `ท่อ ${item.spec.split('x')[0].replace('Ø','')} (ยาว ${item.stockLen/1000}M)`;
+        
+        if (!summary[key]) {
+            summary[key] = { lenMm: 0, stockLen: item.stockLen, type: 'ท่อ' };
+        }
+        summary[key].lenMm += totalLen;
+    });
+
+    shaftItems.forEach(item => {
+        const totalReq = demand * item.usage;
+        const totalLen = totalReq * item.len;
+        const key = `เพลา ${item.spec.split(' ')[1]} (ยาว ${item.stockLen/1000}M)`;
+        
+        if (!summary[key]) {
+            summary[key] = { lenMm: 0, stockLen: item.stockLen, type: 'เพลา' };
+        }
+        summary[key].lenMm += totalLen;
+    });
+
+    let html = `<h3 class="section-title">5) สรุปยอดสั่งซื้อท่อและเพลาตาม Spec วัตถุดิบมาตรฐาน</h3>`;
+    html += `<table>
+                <tr>
+                    <th>รายการวัตถุดิบมาตรฐาน</th>
+                    <th>ความยาวสุทธิรวมทั้งหมด (ม.)</th>
+                    <th>จำนวนที่ต้องสั่งซื้อ (เส้น - คำนวณตามจริง)</th>
+                    <th>จำนวนที่ต้องสั่งซื้อ (เส้น - ปัดขึ้น)</th>
+                </tr>`;
+
+    for (const [key, data] of Object.entries(summary)) {
+        const meters = data.lenMm / 1000;
+        const barsFloat = data.lenMm / data.stockLen;
+        const barsCeil = Math.ceil(barsFloat);
+
+        html += `<tr>
+                    <td><b>${key}</b></td>
+                    <td>${meters.toFixed(2)} ม.</td>
+                    <td><b>${barsFloat.toFixed(2)}</b> เส้น</td>
+                    <td><b style="color:#2563eb;">${barsCeil}</b> เส้น</td>
+                 </tr>`;
+    }
+    html += `</table>`;
+    return html;
+}
+
+function calculateParts() {
+    const demand = parseFloat(document.getElementById('demand').value) || 0;
+    const modelInfo = bomData[currentModel];
+
+    let html = `<h3>ผลการคำนวณสำหรับ ${currentModel} (ยอดผลิต ${demand.toLocaleString()} ชุด)</h3>`;
+
+    const pipeRes = buildPipeTable(demand, modelInfo.pipe);
+    const steelRes = buildSteelTable(demand, modelInfo.steel);
+    const shaftRes = buildShaftTable(demand, modelInfo.shaft);
+    const screwRes = buildScrewTable(demand, modelInfo.screw);
+    const summaryRes = buildRawMaterialSummary(demand, modelInfo.pipe, modelInfo.shaft);
+
+    html += pipeRes.html + steelRes.html + shaftRes.html + screwRes.html + summaryRes;
+
+    html += `<div class="summary-box">
+                <div class="summary-item"><div class="label">ท่อรวม (ชิ้น)</div><div class="value">${(pipeRes.totalBend+pipeRes.totalStraight).toLocaleString()}</div></div>
+                <div class="summary-item"><div class="label">ท่อรวม (เส้น)</div><div class="value">${Math.ceil(pipeRes.totalBarsAll)}</div></div>
+                <div class="summary-item"><div class="label">แผ่นเหล็ก (ชิ้น)</div><div class="value">${steelRes.total.toLocaleString()}</div></div>
+                <div class="summary-item"><div class="label">เพลากลม (เส้น)</div><div class="value">${Math.ceil(shaftRes.totalBarsAll)}</div></div>
+                <div class="summary-item"><div class="label">สกรู (ตัว)</div><div class="value">${screwRes.total.toLocaleString()}</div></div>
+             </div>`;
+
+    document.getElementById('result').innerHTML = html;
+}
+
+// คำนวณเริ่มต้นเมื่อเปิดหน้า
+calculateParts();
+</script>
+
+
+<script async="" src="./Material Requirement Calculator - Allwin_files/hud" data-nf-variant="public" data-netlify-site-id="721b8f54-d435-4ae9-8c52-625f88618cf1" data-app-host="app.netlify.com"></script>
+<iframe sandbox="allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox" id="nl-badge-frame" title="Powered by Netlify" style="position: fixed; bottom: 0px; right: 0px; border: 0px; margin: 0px; padding: 0px; background: transparent; z-index: 2147483645; width: 197px; height: 64px; clip-path: path(&quot;M 3 3 H 184 V 51 H 3 Z&quot;);" data-nl-ready="1" src="./Material Requirement Calculator - Allwin_files/saved_resource.html"></iframe></body></html>
